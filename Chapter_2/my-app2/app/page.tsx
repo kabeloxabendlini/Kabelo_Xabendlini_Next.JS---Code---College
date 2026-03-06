@@ -1,65 +1,206 @@
-import Image from "next/image";
+"use client"; // allows hooks inside ThemeToggle
+
+import ThemeToggle from "./components/theme-toggle";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="min-h-screen bg-base-200">
+
+      {/* Navbar */}
+      <div className="navbar bg-base-100 shadow-sm">
+
+        {/* Left */}
+        <div className="navbar-start">
+
+          {/* Mobile menu */}
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+              ☰
+            </label>
+
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <li><a>Home</a></li>
+              <li><a>Features</a></li>
+              <li><a>Pricing</a></li>
+              <li><a>Contact</a></li>
+            </ul>
+          </div>
+
+          <a className="btn btn-ghost text-xl">My Next App</a>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Desktop menu */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            <li><a>Home</a></li>
+            <li><a>Features</a></li>
+            <li><a>Pricing</a></li>
+            <li><a>Contact</a></li>
+          </ul>
         </div>
-      </main>
-    </div>
+
+        {/* Right */}
+        <div className="navbar-end gap-2">
+          <ThemeToggle />
+
+          <button className="btn btn-primary">
+            Login
+          </button>
+        </div>
+
+      </div>
+
+      {/* Hero Section */}
+      <section className="hero py-20 text-center">
+        <div className="hero-content">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">Hello Next.js</h1>
+
+            <p className="py-6">
+              This is a Next.js app using Tailwind CSS and DaisyUI.
+              Build beautiful interfaces quickly.
+            </p>
+
+            <button className="btn btn-primary">
+              Get Started
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Cards */}
+      <section className="p-10 grid md:grid-cols-3 gap-6">
+        <div className="card bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Next.js</h2>
+            <p>Powerful React framework for production apps.</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Learn</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="card bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">Tailwind CSS</h2>
+            <p>Utility-first CSS framework for fast UI design.</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-secondary">Learn</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="card bg-base-100 shadow-xl">
+          <div className="card-body">
+            <h2 className="card-title">DaisyUI</h2>
+            <p>Component library built on Tailwind CSS.</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-accent">Learn</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
   );
 }
+
+// "use client"; // allows hooks inside ThemeToggle
+
+// import ThemeToggle from "./components/theme-toggle";
+
+// export default function Home() {
+//   return (
+//     <main className="min-h-screen bg-base-200">
+
+//       {/* Navbar */}
+//       <div className="navbar bg-base-100 shadow-sm">
+//         {/* Left */}
+//         <div className="navbar-start">
+//           <div className="dropdown">
+//             <label tabIndex={0} className="btn btn-ghost lg:hidden">☰</label>
+//             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+//               <li><a>Home</a></li>
+//               <li><a>Features</a></li>
+//               <li><a>Pricing</a></li>
+//               <li><a>Contact</a></li>
+//             </ul>
+//           </div>
+//           <a className="btn btn-ghost text-xl">My Next App</a>
+//         </div>
+
+//         {/* Desktop menu */}
+//         <div className="navbar-center hidden lg:flex">
+//           <ul className="menu menu-horizontal px-1">
+//             <li><a>Home</a></li>
+//             <li><a>Features</a></li>
+//             <li><a>Pricing</a></li>
+//             <li><a>Contact</a></li>
+//           </ul>
+//         </div>
+
+//         {/* Right */}
+//         <div className="navbar-end gap-2">
+//           <ThemeToggle />
+//           <button className="btn btn-primary">Login</button>
+//         </div>
+//       </div>
+
+//         {/* Hero Section */}
+//       <section className="hero py-20 text-center">
+//         <div className="hero-content">
+//           <div className="max-w-md">
+//             <h1 className="text-5xl font-bold">Hello Next.js</h1>
+
+//             <p className="py-6">
+//               This is a Next.js app using Tailwind CSS and DaisyUI.
+//               Build beautiful interfaces quickly.
+//             </p>
+
+//             <button className="btn btn-primary">
+//               Get Started
+//             </button>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Cards */}
+//       <section className="p-10 grid md:grid-cols-3 gap-6">
+//         <div className="card bg-base-100 shadow-xl">
+//           <div className="card-body">
+//             <h2 className="card-title">Next.js</h2>
+//             <p>Powerful React framework for production apps.</p>
+//             <div className="card-actions justify-end">
+//               <button className="btn btn-primary">Learn</button>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="card bg-base-100 shadow-xl">
+//           <div className="card-body">
+//             <h2 className="card-title">Tailwind CSS</h2>
+//             <p>Utility-first CSS framework for fast UI design.</p>
+//             <div className="card-actions justify-end">
+//               <button className="btn btn-secondary">Learn</button>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="card bg-base-100 shadow-xl">
+//           <div className="card-body">
+//             <h2 className="card-title">DaisyUI</h2>
+//             <p>Component library built on Tailwind CSS.</p>
+//             <div className="card-actions justify-end">
+//               <button className="btn btn-accent">Learn</button>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//     </main>
+//   );
+// }
+      
