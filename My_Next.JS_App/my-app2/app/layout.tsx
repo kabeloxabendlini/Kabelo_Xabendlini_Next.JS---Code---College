@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-title: 'About Greg\'s Portfolio of Small Bets',
-description: 'Tech Courses and Books',
-keywords: 'passive income, small bets, tech courses, tech books, tech tutorials'
+  title: 'Kabelo: Bookstore App!',
+  description: 'A Bookstore App that helps store books and make them feaseable and attainable.',
+  keywords: 'A Bookstore App, store books, feaseable, attainable.'
 };
 
 export default function RootLayout({
