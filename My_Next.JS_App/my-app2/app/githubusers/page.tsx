@@ -46,7 +46,7 @@ const GitHubUsersPage = async () => {
               </td>
 
               <td className="px-6 py-5">
-                <Link href={user.html_url} className="btn btn-link">
+                <Link href={user.html_url} className="flex h-12 items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]">
                   View on GitHub
                 </Link>
               </td>
@@ -54,7 +54,7 @@ const GitHubUsersPage = async () => {
               <td className="px-6 py-5">
                 <Link
                   href={`/githubusers/${user.login}`}
-                  className="btn btn-outline btn-sm"
+                  className="flex h-12 items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
                 >
                   Go to Repos
                 </Link>
