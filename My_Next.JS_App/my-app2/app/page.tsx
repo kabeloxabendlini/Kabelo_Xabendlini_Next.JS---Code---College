@@ -1,4 +1,3 @@
-// /app/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -29,6 +28,11 @@ export default function Home() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Books Section - Moved to top, right below hero */}
+      <section className="w-full max-w-6xl p-10">
+        <Books />
       </section>
 
       {/* Navigation Cards */}
@@ -88,11 +92,6 @@ export default function Home() {
           </div>
         </div>
 
-      </section>
-
-      {/* Books Section */}
-      <section className="w-full max-w-6xl p-10">
-        <Books />
       </section>
 
       {/* Resources Section */}

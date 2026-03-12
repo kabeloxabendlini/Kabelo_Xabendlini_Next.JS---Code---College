@@ -1,11 +1,10 @@
 // /app/api/books/search/route.js
-
 import { NextResponse } from "next/server";
-import books from "../data.json";
+import books from "../../data.json";
 
-/* GET - Fetch books or search */
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
+// GET: Fetch all books or search books
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
   const query = searchParams.get("query") || "";
 
   const filteredBooks = books.filter((book) =>
@@ -15,9 +14,9 @@ export async function GET(req) {
   return NextResponse.json(filteredBooks);
 }
 
-/* POST - Add a new book */
-export async function POST(req) {
-  const { title, link, img } = await req.json();
+// POST: Add a new book
+export async function POST(request) {
+  const { title, link, img } = await request.json();
 
   const newBook = {
     id: books.length + 1,
@@ -33,3 +32,4 @@ export async function POST(req) {
     book: newBook,
   });
 }
+
