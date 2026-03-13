@@ -14,10 +14,10 @@ export default function Home() {
           <div className="max-w-lg">
             <Image
               src="/next.svg"
-              alt="Next.js Logo"
-              width={120}
-              height={40}
-              style={{ height: "auto" }}
+              alt="Next.js logo"
+              width={180}
+              height={38}
+              style={{ width: "auto", height: "auto" }}
               priority
             />
             <h1 className="text-4xl font-bold mt-6 text-white">
