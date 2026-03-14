@@ -45,7 +45,7 @@ export async function GET(req: Request) {
     let books: Book[];
     const allBooks = await prisma.book.findMany();
 
-    // If query exists, filter books by title (case-insensitive)
+    //
     if (query) {
       const lowerQuery = query.toLowerCase();
       books = allBooks.filter(book => book.title.toLowerCase().includes(lowerQuery));
@@ -59,7 +59,7 @@ export async function GET(req: Request) {
       books = await prisma.book.findMany();
     }
 
-    // Sort books by title
+    // Return the books as JSON
     return NextResponse.json(books);
   } catch (err) {
     console.error("GET /api/books failed:", err);
