@@ -11,10 +11,7 @@ type GitHubUser = {
 
 // Fetch GitHub users
 async function fetchGitHubUsers(): Promise<GitHubUser[]> {
-  const res = await fetch("https://api.github.com/search/users?q=greg", {
-    next: { revalidate: 60 },
-  });
-
+  const res = await fetch("https://api.github.com/search/users?q=greg", { next: { revalidate: 60 } });
   if (!res.ok) throw new Error("Failed to fetch GitHub users");
   const json = await res.json();
   return json.items;
@@ -25,19 +22,16 @@ export default async function GitHubUsersPage() {
 
   return (
     <div className="p-10 max-w-7xl mx-auto space-y-10">
-      {/* Page heading */}
       <h1 className="text-5xl font-extrabold text-center text-gray-900 dark:text-gray-100">
         GitHub Users
       </h1>
 
-      {/* Users grid */}
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {users.map((user: GitHubUser) => (
+        {users.map(user => (
           <div
             key={user.id}
             className="bg-white dark:bg-gray-900 shadow-xl rounded-xl p-6 flex flex-col items-center transition-transform hover:scale-105"
           >
-            {/* Avatar */}
             <Image
               src={user.avatar_url}
               alt={user.login}
@@ -46,12 +40,9 @@ export default async function GitHubUsersPage() {
               className="rounded-full border-2 border-gray-300 dark:border-gray-600 mb-4"
               unoptimized
             />
-
-            {/* Username */}
             <div className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-1">{user.login}</div>
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">ID: {user.id}</div>
 
-            {/* Action buttons */}
             <div className="flex gap-2">
               <Link
                 href={user.html_url}

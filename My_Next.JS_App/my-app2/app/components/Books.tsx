@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import AddBook from "./AddBook";
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import AddBook from './AddBook';
 
 type Book = {
   id: string;
@@ -14,14 +14,21 @@ type Book = {
 
 export default function Books() {
   const [books, setBooks] = useState<Book[]>([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const fetchBooks = async () => {
+  // Fetch books from API
+  const fetchBooks = async (searchQuery = '') => {
     setLoading(true);
     try {
-      const res = await fetch("/api/books");
-      if (!res.ok) throw new Error("Failed to fetch books");
+      const res = await fetch(`/api/books?query=${encodeURIComponent(searchQuery)}`);
+
+      if (!res.ok) {
+        console.error('Fetch failed:', res.status);
+        setBooks([]);
+        return;
+      }
+
       const data: Book[] = await res.json();
       setBooks(data);
     } catch (err) {
@@ -32,57 +39,50 @@ export default function Books() {
     }
   };
 
+  // Initial load
   useEffect(() => {
     fetchBooks();
   }, []);
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/books?query=${encodeURIComponent(query)}`);
-      if (!res.ok) throw new Error("Search failed");
-      const data: Book[] = await res.json();
-      setBooks(data);
-    } catch (err) {
-      console.error(err);
-      setBooks([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Live search with debounce
+  useEffect(() => {
+    const debounce = setTimeout(() => fetchBooks(query), 300);
+    return () => clearTimeout(debounce);
+  }, [query]);
 
+  // Delete book (optimistic UI)
   const deleteBook = async (id: string) => {
+    setBooks(prev => prev.filter(book => book.id !== id));
     try {
-      const res = await fetch(`/api/books/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete book");
-      setBooks(prev => prev.filter(book => book.id !== id));
+      const res = await fetch(`/api/books/${id}`, { method: 'DELETE' });
+      if (!res.ok) {
+        throw new Error('Failed to delete');
+      }
     } catch (err) {
       console.error(err);
+      fetchBooks(query); // revert UI if delete fails
     }
   };
 
   return (
     <div className="space-y-8 w-full px-4 md:px-8 lg:px-16">
       {/* Search + Add */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-2 justify-between items-center mb-6">
-        <form onSubmit={handleSearch} className="flex flex-1 gap-2 w-full md:w-auto">
-          <input
-            type="text"
-            placeholder="Search books..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="input input-bordered w-full text-black"
-          />
-          <button type="submit" className="btn btn-primary">Search</button>
-        </form>
+      <div className="flex flex-col md:flex-row gap-3 items-center mb-6">
+        <input
+          type="text"
+          placeholder="Search books..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="input input-bordered w-full md:flex-1 text-black"
+        />
 
-        <AddBook refreshBooks={fetchBooks} />
+        <AddBook refreshBooks={() => fetchBooks(query)} />
       </div>
-
       {/* Loading / Empty */}
       {loading && <p className="text-center text-white">Loading books...</p>}
-      {!loading && books.length === 0 && <p className="text-center text-white">No books found</p>}
+      {!loading && books.length === 0 && (
+        <p className="text-center text-white">No books found</p>
+      )}
 
       {/* Book Grid */}
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -91,19 +91,19 @@ export default function Books() {
             key={book.id}
             className="relative overflow-hidden rounded-xl shadow-2xl hover:scale-105 transition-transform duration-200 bg-zinc-900 border border-gray-700"
           >
-            {/* Responsive image with fixed aspect ratio */}
             <div className="relative w-full aspect-[3/4]">
               <Image
                 src={book.img}
                 alt={book.title}
                 fill
-                style={{ objectFit: "contain" }}
+                style={{ objectFit: 'contain' }}
               />
             </div>
 
-            {/* Overlay on hover */}
             <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-end opacity-0 hover:opacity-100 transition-opacity duration-300 p-4">
-              <h2 className="text-white text-lg font-semibold line-clamp-2 mb-2">{book.title}</h2>
+              <h2 className="text-white text-lg font-semibold line-clamp-2 mb-2">
+                {book.title}
+              </h2>
               <div className="flex gap-2">
                 <Link
                   href={book.link}

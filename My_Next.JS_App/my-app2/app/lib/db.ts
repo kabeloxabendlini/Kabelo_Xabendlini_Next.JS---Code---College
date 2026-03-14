@@ -1,12 +1,15 @@
-// app/db.ts
+// app/lib/db.ts
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
-
-// Single PrismaClient in dev
-export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient({ log: ["query"] });
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+declare global {
+  var globalForPrisma: { prisma?: PrismaClient };
 }
+
+// Create a single Prisma Client instance and export it
+export const prisma =
+  globalThis.globalForPrisma?.prisma ||
+  new PrismaClient({}); // <- can leave empty, will use DATABASE_URL
+
+  // Ensure the Prisma Client is shared across hot reloads in development
+if (!globalThis.globalForPrisma) globalThis.globalForPrisma = {};
+globalThis.globalForPrisma.prisma = prisma;

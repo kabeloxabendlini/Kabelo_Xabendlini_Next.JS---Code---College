@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Navbar() {
-  const [moreOpen, setMoreOpen] = useState(false);
   const [logoOpen, setLogoOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   const logoRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -19,22 +19,26 @@ export default function Navbar() {
       if (aboutRef.current && !aboutRef.current.contains(target)) setAboutOpen(false);
       if (moreRef.current && !moreRef.current.contains(target)) setMoreOpen(false);
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  return (
-    <nav className="navbar bg-gray-900 shadow-sm px-6 py-3 text-white">
+  const Dropdown = ({ open, children }: { open: boolean; children: React.ReactNode }) =>
+    open ? children : null;
 
+  return (
+    <nav className="navbar bg-gray-900 shadow-sm px-6 py-3 text-white flex justify-between items-center">
+      
       {/* Logo / Brand Dropdown */}
-      <div className="flex-1 relative" ref={logoRef}>
+      <div className="relative" ref={logoRef}>
         <button
           onClick={() => setLogoOpen(!logoOpen)}
           className="btn btn-ghost text-2xl font-bold flex items-center gap-1 text-white"
         >
           MySite
           <svg
-            className={`w-4 h-4 transform transition-transform ${logoOpen ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transform transition-transform ${logoOpen ? 'rotate-180' : ''}`}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -44,42 +48,25 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {logoOpen && (
+        <Dropdown open={logoOpen}>
           <ul className="absolute left-0 mt-2 w-44 bg-gray-800 rounded-md shadow-lg py-2 z-50">
-            <li>
-              <Link href="/profile" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link href="/dashboard" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link href="/logout" className="block px-4 py-2 hover:bg-red-500/20 text-red-400 transition">
-                Logout
-              </Link>
-            </li>
+            <li><Link href="/profile" className="block px-4 py-2 hover:bg-primary/20 transition">Profile</Link></li>
+            <li><Link href="/dashboard" className="block px-4 py-2 hover:bg-primary/20 transition">Dashboard</Link></li>
+            <li><Link href="/logout" className="block px-4 py-2 hover:bg-red-500/20 text-red-400 transition">Logout</Link></li>
           </ul>
-        )}
+        </Dropdown>
       </div>
 
       {/* Desktop Menu */}
-      <div className="flex-none hidden md:flex items-center space-x-6 text-white">
-        <Link href="/" className="hover:text-primary transition text-white">
-          Home
-        </Link>
+      <div className="hidden md:flex items-center space-x-6">
+        <Link href="/" className="hover:text-primary transition">Home</Link>
 
         {/* About Dropdown */}
         <div className="relative" ref={aboutRef}>
-          <button
-            onClick={() => setAboutOpen(!aboutOpen)}
-            className="hover:text-primary transition flex items-center gap-1 text-white"
-          >
+          <button onClick={() => setAboutOpen(!aboutOpen)} className="flex items-center gap-1 hover:text-primary transition">
             About
             <svg
-              className={`w-4 h-4 transform transition-transform ${aboutOpen ? "rotate-180" : ""}`}
+              className={`w-4 h-4 transform transition-transform ${aboutOpen ? 'rotate-180' : ''}`}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -89,36 +76,21 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {aboutOpen && (
+          <Dropdown open={aboutOpen}>
             <ul className="absolute mt-2 w-44 bg-gray-800 rounded-md shadow-lg py-2 z-50">
-              <li>
-                <Link href="/about" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/githubusers" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                  GitHub Users
-                </Link>
-              </li>
-              <li>
-                <Link href="/about/contact" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                  Contact
-                </Link>
-              </li>
+              <li><Link href="/about" className="block px-4 py-2 hover:bg-primary/20 transition">About</Link></li>
+              <li><Link href="/githubusers" className="block px-4 py-2 hover:bg-primary/20 transition">GitHub Users</Link></li>
+              <li><Link href="/about/contact" className="block px-4 py-2 hover:bg-primary/20 transition">Contact</Link></li>
             </ul>
-          )}
+          </Dropdown>
         </div>
 
         {/* More Dropdown */}
         <div className="relative" ref={moreRef}>
-          <button
-            onClick={() => setMoreOpen(!moreOpen)}
-            className="hover:text-primary transition flex items-center gap-1 text-white"
-          >
+          <button onClick={() => setMoreOpen(!moreOpen)} className="flex items-center gap-1 hover:text-primary transition">
             More
             <svg
-              className={`w-4 h-4 transform transition-transform ${moreOpen ? "rotate-180" : ""}`}
+              className={`w-4 h-4 transform transition-transform ${moreOpen ? 'rotate-180' : ''}`}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -128,23 +100,14 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {moreOpen && (
+          <Dropdown open={moreOpen}>
             <ul className="absolute right-0 mt-2 w-44 bg-gray-800 rounded-md shadow-lg py-2 z-50">
-              <li>
-                <Link href="/blog" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="block px-4 py-2 hover:bg-primary/20 transition text-white">
-                  Services
-                </Link>
-              </li>
+              <li><Link href="/blog" className="block px-4 py-2 hover:bg-primary/20 transition">Blog</Link></li>
+              <li><Link href="/services" className="block px-4 py-2 hover:bg-primary/20 transition">Services</Link></li>
             </ul>
-          )}
+          </Dropdown>
         </div>
       </div>
-
     </nav>
   );
 }

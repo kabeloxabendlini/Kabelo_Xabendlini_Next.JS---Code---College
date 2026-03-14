@@ -1,7 +1,8 @@
 // prisma/seed.ts
-import { prisma } from "../app/lib/db"; // this path is correct only if db.ts is inside 'app'
+import { PrismaClient } from "@prisma/client";
 
-// Seed the database with initial data
+const prisma = new PrismaClient();
+
 async function main() {
   await prisma.book.createMany({
     data: [

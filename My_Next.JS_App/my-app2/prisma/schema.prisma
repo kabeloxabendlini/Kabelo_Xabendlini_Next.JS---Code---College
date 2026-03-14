@@ -4,12 +4,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  // remove the url property entirely
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Book {
-  id    String @id @default(cuid())
+  id    String @id @map("_id") @default(auto()) @db.ObjectId
   title String
   link  String
   img   String

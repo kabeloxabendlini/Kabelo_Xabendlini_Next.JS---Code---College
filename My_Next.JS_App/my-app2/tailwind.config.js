@@ -4,6 +4,11 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {},
+  },
   plugins: [require("daisyui")],
-};
+  daisyui: {
+    themes: ["light", "dark", "cupcake"], // your preferred themes
+  },
+};t
