@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "../../../lib/db";
+import { prisma } from "../../../../lib/db";
 
 // Dummy books data
 const dummyBooks = [
@@ -38,11 +38,12 @@ export async function GET(req: Request) {
 
     // Filter by query if provided
     const filteredBooks = query
-      ? allBooks.filter((b) =>
-          b.title.toLowerCase().includes(query.toLowerCase())
-        )
-      : allBooks;
+  ? allBooks.filter((b: { title: string }) =>
+      b.title.toLowerCase().includes(query.toLowerCase())
+    )
+  : allBooks;
 
+  //
     return NextResponse.json(filteredBooks);
   } catch (err) {
     console.error("GET failed:", err);
