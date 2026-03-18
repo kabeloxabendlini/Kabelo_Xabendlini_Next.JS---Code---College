@@ -1,14 +1,12 @@
-// /app/githubusers/[users]/page.tsx
+import { use } from "react";
 import Repos from "../../components/Repos";
 
 type PageProps = {
-  params: {
-    users: string;
-  };
+  params: Promise<{ users: string }>;
 };
 
 export default function UserReposPage({ params }: PageProps) {
-  const { users: username } = params; // no need to await
+  const { users: username } = use(params); // unwrap Promise
 
   return (
     <div className="p-10 max-w-6xl mx-auto space-y-10">
