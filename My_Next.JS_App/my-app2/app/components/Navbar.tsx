@@ -73,11 +73,9 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <button
-                onClick={handleLogout}
-                className="block w-full text-left px-4 py-2 hover:bg-red-500/20 text-red-400 transition"
-              >
-                Logout
+              <button onClick={() => (window.location.href = '/logout')}
+              className="block w-full text-left px-4 py-2 hover:bg-red-500/20 text-red-400 transition">
+              Logout
               </button>
             </li>
           </ul>
