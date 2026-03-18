@@ -115,6 +115,7 @@ export default function Books() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectFit: "contain" }}
+                  loading="eager"  // <- this makes it load immediately
                   unoptimized // avoids Next.js image optimization errors
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = "/fallback.jpg"

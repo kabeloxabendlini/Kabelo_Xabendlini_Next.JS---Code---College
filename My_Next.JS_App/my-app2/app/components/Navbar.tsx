@@ -12,6 +12,10 @@ export default function Navbar() {
   const logoRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
+  const handleLogout = () => {
+    localStorage.removeItem('user'); // or token
+    window.location.href = '/login';
+  };
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -69,12 +73,12 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link
-                href="/logout"
-                className="block px-4 py-2 hover:bg-red-500/20 text-red-400 transition"
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left px-4 py-2 hover:bg-red-500/20 text-red-400 transition"
               >
                 Logout
-              </Link>
+              </button>
             </li>
           </ul>
         </Dropdown>
